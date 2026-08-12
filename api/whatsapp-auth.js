@@ -17,6 +17,8 @@ function config() {
     serviceKey: process.env.SUPABASE_SERVICE_ROLE_KEY,
     accessToken: process.env.WHATSAPP_ACCESS_TOKEN,
     phoneNumberId: process.env.WHATSAPP_PHONE_NUMBER_ID,
+    botUrl: String(process.env.WHATSAPP_BOT_URL || "").replace(/\/$/, ""),
+    botApiToken: process.env.WHATSAPP_BOT_API_TOKEN,
     templateName:
       process.env.WHATSAPP_AUTH_TEMPLATE_NAME || "parko_login_code",
     templateLang: process.env.WHATSAPP_AUTH_TEMPLATE_LANG || "en_US",
@@ -59,6 +61,22 @@ function randomPassword() {
 }
 
 async function sendWhatsAppCode(phone, code, settings) {
+  if (settings.botUrl && settings.botApiToken) {
+    const response = await fetch(`${settings.botUrl}/send`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${settings.botApiToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        to: phone,
+        message: `Parko Kosova: kodi yt i hyrjes eshte ${code}. Ky kod skadon pas 10 minutash.`,
+      }),
+    });
+    const body = await response.json().catch(() => ({}));
+    return { response, body };
+  }
+
   const response = await fetch(
     `https://graph.facebook.com/v24.0/${settings.phoneNumberId}/messages`,
     {
@@ -205,11 +223,11 @@ async function verifyCode(res, phone, code) {
 module.exports = async function handler(req, res) {
   if (req.method !== "POST") return send(res, 405, { ok: false, message: "Only POST is supported." });
   const settings = config();
-  if (!settings.serviceKey || !settings.accessToken || !settings.phoneNumberId) {
+  if (!settings.serviceKey || (!settings.botUrl && (!settings.accessToken || !settings.phoneNumberId))) {
     return send(res, 501, {
       ok: false,
       code: "WHATSAPP_NOT_CONFIGURED",
-      message: "WhatsApp Cloud API nuk eshte konfiguruar ne Vercel.",
+      message: "WhatsApp nuk eshte konfiguruar ne Vercel.",
     });
   }
 

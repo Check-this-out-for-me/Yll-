@@ -19,6 +19,7 @@ function config() {
     phoneNumberId: process.env.WHATSAPP_PHONE_NUMBER_ID,
     botUrl: String(process.env.WHATSAPP_BOT_URL || "").replace(/\/$/, ""),
     botApiToken: process.env.WHATSAPP_BOT_API_TOKEN,
+    queueEnabled: String(process.env.WHATSAPP_BOT_QUEUE_ENABLED || "false").toLowerCase() === "true",
     templateName:
       process.env.WHATSAPP_AUTH_TEMPLATE_NAME || "parko_login_code",
     templateLang: process.env.WHATSAPP_AUTH_TEMPLATE_LANG || "en_US",
@@ -61,6 +62,19 @@ function randomPassword() {
 }
 
 async function sendWhatsAppCode(phone, code, settings) {
+  if (settings.queueEnabled) {
+    const response = await supabaseFetch("/rest/v1/parko_whatsapp_outbox", {
+      method: "POST",
+      headers: { Prefer: "return=minimal" },
+      body: JSON.stringify({
+        phone,
+        message: `Parko Kosova: kodi yt i hyrjes eshte ${code}. Ky kod skadon pas 10 minutash.`,
+      }),
+    });
+    const body = await response.json().catch(() => ({}));
+    return { ok: response.ok, body };
+  }
+
   if (settings.botUrl && settings.botApiToken) {
     const response = await fetch(`${settings.botUrl}/send`, {
       method: "POST",
@@ -74,7 +88,7 @@ async function sendWhatsAppCode(phone, code, settings) {
       }),
     });
     const body = await response.json().catch(() => ({}));
-    return { response, body };
+    return { ok: response.ok, body };
   }
 
   const response = await fetch(
@@ -104,7 +118,7 @@ async function sendWhatsAppCode(phone, code, settings) {
     },
   );
   const body = await response.json().catch(() => ({}));
-  return { response, body };
+  return { ok: response.ok, body };
 }
 
 async function sendCode(req, res, phone, settings) {
@@ -139,7 +153,7 @@ async function sendCode(req, res, phone, settings) {
   }
 
   const delivered = await sendWhatsAppCode(phone, code, settings);
-  if (!delivered.response.ok) {
+  if (!delivered.ok) {
     await supabaseFetch(
       `/rest/v1/parko_phone_otps?phone=eq.${encodeURIComponent(phone)}&used_at=is.null`,
       { method: "DELETE" },
@@ -225,7 +239,7 @@ module.exports = async function handler(req, res) {
   const settings = config();
   const hasBot = Boolean(settings.botUrl && settings.botApiToken);
   const hasMeta = Boolean(settings.accessToken && settings.phoneNumberId);
-  if (!settings.serviceKey || (!hasBot && !hasMeta)) {
+  if (!settings.serviceKey || (!settings.queueEnabled && !hasBot && !hasMeta)) {
     return send(res, 501, {
       ok: false,
       code: "WHATSAPP_NOT_CONFIGURED",

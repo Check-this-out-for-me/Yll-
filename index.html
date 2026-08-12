@@ -1528,6 +1528,29 @@
           return;
         }
         phoneSendBtn.disabled = true;
+        phoneAuthMsg.textContent = "Po dergohet kodi ne WhatsApp...";
+        const customResponse = await fetch("/api/whatsapp-auth", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ action: "send", phone }),
+        });
+        const customResult = await customResponse.json().catch(() => ({}));
+        phoneSendBtn.disabled = false;
+        if (!customResponse.ok) {
+          phoneSendBtn.textContent = "Dërgo kodin në WhatsApp";
+          phoneAuthMsg.textContent =
+            customResult.message ||
+            "WhatsApp login nuk eshte konfiguruar ne Vercel.";
+          return;
+        }
+        authPhone = phone;
+        phoneSendBtn.textContent = "Dërgo kod të ri në WhatsApp";
+        phoneOtpWrap.classList.remove("hidden");
+        aPhoneOtp.focus();
+        phoneAuthMsg.textContent =
+          "Kodi u dergua nga numri Business. Shkruaje kodin 6-shifror.";
+        return;
+        phoneSendBtn.disabled = true;
         phoneAuthMsg.textContent = "Po dërgohet kodi në WhatsApp...";
         const { error } = await sb.auth.signInWithOtp({
           phone,
@@ -1567,6 +1590,46 @@
           phoneAuthMsg.textContent = "Shkruaj numrin dhe kodin 6-shifror.";
           return;
         }
+        phoneVerifyBtn.disabled = true;
+        phoneAuthMsg.textContent = "Po verifikohet kodi...";
+        const customResponse = await fetch("/api/whatsapp-auth", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ action: "verify", phone, code: token }),
+        });
+        const customResult = await customResponse.json().catch(() => ({}));
+        phoneVerifyBtn.disabled = false;
+        if (!customResponse.ok || !customResult.password) {
+          phoneAuthMsg.textContent =
+            customResult.message || "Kodi nuk eshte valid ose ka skaduar.";
+          return;
+        }
+        const signedIn = await sb.auth.signInWithPassword({
+          phone,
+          password: customResult.password,
+        });
+        if (signedIn.error) {
+          phoneAuthMsg.textContent = authErrorText(signedIn.error, "phone");
+          return;
+        }
+        const customUser = signedIn.data?.user;
+        guestMode = false;
+        if (customUser) {
+          await sb.from("parko_profiles").upsert(
+            {
+              id: customUser.id,
+              email: customUser.email?.toLowerCase() || null,
+              phone,
+              full_name:
+                customUser.user_metadata?.full_name || phone || "Perdorues",
+            },
+            { onConflict: "id" },
+          );
+        }
+        phoneAuthMsg.textContent = "U kyce me sukses.";
+        await syncUser();
+        setTimeout(() => authModal.classList.remove("on"), 350);
+        return;
         phoneVerifyBtn.disabled = true;
         phoneAuthMsg.textContent = "Po verifikohet kodi...";
         const { data, error } = await sb.auth.verifyOtp({

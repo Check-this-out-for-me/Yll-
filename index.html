@@ -70,6 +70,13 @@
         gap: 10px;
         font-weight: 950;
       }
+      .brand-logo {
+        width: 156px;
+        height: 54px;
+        display: block;
+        object-fit: contain;
+        filter: drop-shadow(0 0 18px #43e28b26);
+      }
       .logo {
         width: 42px;
         height: 42px;
@@ -536,6 +543,7 @@
         .admin-head { flex-direction: column; }
       }
       @media (max-width: 620px) {
+        .brand-logo { width: 132px; height: 46px; }
         .support-launcher { right: 14px; bottom: 84px; width: 58px; height: 58px; }
         .support-popover { right: 14px; bottom: 151px; }
         .log-item { grid-template-columns: 9px 1fr; }
@@ -625,7 +633,7 @@
     <header class="top">
       <div class="wrap nav">
         <div class="brand">
-          <span class="logo">P</span><span>Parko Kosova</span>
+          <img class="brand-logo" src="/parkokosova-logo.png" alt="Parko Kosova" />
         </div>
         <div class="navr">
           <button class="btn hideMob" onclick="tab('explore')">Explore</button

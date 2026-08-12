@@ -223,7 +223,9 @@ async function verifyCode(res, phone, code) {
 module.exports = async function handler(req, res) {
   if (req.method !== "POST") return send(res, 405, { ok: false, message: "Only POST is supported." });
   const settings = config();
-  if (!settings.serviceKey || (!settings.botUrl && (!settings.accessToken || !settings.phoneNumberId))) {
+  const hasBot = Boolean(settings.botUrl && settings.botApiToken);
+  const hasMeta = Boolean(settings.accessToken && settings.phoneNumberId);
+  if (!settings.serviceKey || (!hasBot && !hasMeta)) {
     return send(res, 501, {
       ok: false,
       code: "WHATSAPP_NOT_CONFIGURED",

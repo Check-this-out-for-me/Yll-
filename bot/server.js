@@ -3,7 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const QRCode = require("qrcode");
 const { createClient } = require("@supabase/supabase-js");
-const { Client, LocalAuth } = require("whatsapp-web.js");
+const { Client, LocalAuth, NoAuth } = require("whatsapp-web.js");
 
 const app = express();
 const port = Number(process.env.PORT || 8787);
@@ -25,6 +25,8 @@ const outboxEnabled =
   String(process.env.WHATSAPP_OUTBOX_ENABLED || "false").toLowerCase() ===
   "true";
 const outboxPollMs = Math.max(1000, Number(process.env.OUTBOX_POLL_MS || 3000));
+const persistSession =
+  String(process.env.WA_PERSIST_SESSION || "false").toLowerCase() === "true";
 const supabase =
   process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY
     ? createClient(
@@ -148,10 +150,14 @@ app.post("/send", requireToken(apiToken), async (req, res) => {
 });
 
 const client = new Client({
-  authStrategy: new LocalAuth({
-    clientId: process.env.WA_CLIENT_ID || "parko-kosova",
-    dataPath: process.env.WA_SESSION_PATH || "./.wwebjs_auth",
-  }),
+  // A fresh QR session avoids a WhatsApp Web profile redirect loop on this laptop.
+  // Set WA_PERSIST_SESSION=true only after a clean linked session is available.
+  authStrategy: persistSession
+    ? new LocalAuth({
+        clientId: process.env.WA_CLIENT_ID || "parko-kosova",
+        dataPath: process.env.WA_SESSION_PATH || "./.wwebjs_auth",
+      })
+    : new NoAuth(),
   puppeteer: {
     headless: true,
     ...(process.env.PUPPETEER_EXECUTABLE_PATH
@@ -305,3 +311,4 @@ app.listen(port, () => {
   });
   setInterval(processOutbox, outboxPollMs);
 });
+

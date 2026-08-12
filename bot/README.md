@@ -8,6 +8,7 @@ Ky Ã«shtÃ« njÃ« shÃ«rbim i veÃ§antÃ« Node pÃ«r lidhje me QR, i nda
 - Ruajti sesionin WhatsApp nÃ« `.wwebjs_auth`, kÃ«shtu qÃ« QR-ja nuk kÃ«rkohet pas Ã§do rinisjeje.
 - Jep `/health` pÃ«r kontroll publik dhe `/status`, `/qr` e `/send` vetÃ«m me token.
 - Kufizon dÃ«rgimet te i njÃ«jti numÃ«r me cooldown dhe nuk lejon mesazhe bosh ose shumÃ« tÃ« gjata.
+- Kontrollon radhÃ«n private `parko_whatsapp_outbox` nÃ« Supabase dhe dÃ«rgon kodet e login-it nga WhatsApp Web.
 
 ## Kujdes
 
@@ -21,6 +22,10 @@ Ky pÃ«rdor WhatsApp Web automation, jo WhatsApp Cloud API zyrtare. Ã‹shtÃ�
 4. Hape panelin nÃ« `http://localhost:8787/?token=BOT_PANEL_TOKEN`.
 5. NÃ« WhatsApp Business: **Settings > Linked devices > Link a device**, pastaj skano QR-nÃ«.
 6. Mos e vendos dosjen `.wwebjs_auth` nÃ« GitHub dhe mos e ndaj QR-nÃ« me askÃ«nd.
+
+## Kodet e login-it tÃ« faqes
+
+NÃ« `.env` tÃ« botit vendos `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` dhe `WHATSAPP_OUTBOX_ENABLED=true`. NÃ« Vercel vendos tÃ« njÃ«jtin `SUPABASE_SERVICE_ROLE_KEY` dhe `WHATSAPP_BOT_QUEUE_ENABLED=true`. Faqja do ta ruajÃ« kodin nÃ« outbox; laptopi do ta dÃ«rgojÃ« sapo statusi i WhatsApp-it tÃ« jetÃ« `ready`.
 
 ## Online
 

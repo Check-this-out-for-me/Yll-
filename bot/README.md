@@ -1,0 +1,27 @@
+# Parko Kosova WhatsApp QR bot
+
+Ky Ã«shtÃ« njÃ« shÃ«rbim i veÃ§antÃ« Node pÃ«r lidhje me QR, i ndarÃ« nga faqja statike nÃ« Vercel.
+
+## Ã‡farÃ« bÃ«n
+
+- Shfaq njÃ« panel privat ku del QR-ja e lidhjes.
+- Ruajti sesionin WhatsApp nÃ« `.wwebjs_auth`, kÃ«shtu qÃ« QR-ja nuk kÃ«rkohet pas Ã§do rinisjeje.
+- Jep `/health` pÃ«r kontroll publik dhe `/status`, `/qr` e `/send` vetÃ«m me token.
+- Kufizon dÃ«rgimet te i njÃ«jti numÃ«r me cooldown dhe nuk lejon mesazhe bosh ose shumÃ« tÃ« gjata.
+
+## Kujdes
+
+Ky pÃ«rdor WhatsApp Web automation, jo WhatsApp Cloud API zyrtare. Ã‹shtÃ« mÃ« i brishtÃ« dhe mund tÃ« shkaktojÃ« dalje nga sesioni ose kufizim tÃ« numrit nga WhatsApp. PÃ«rdore vetÃ«m pÃ«r mesazhe tÃ« kÃ«rkuara nga pÃ«rdoruesit dhe mbaj volum tÃ« ulÃ«t.
+
+## Konfigurimi
+
+1. Kopjo `.env.example` nÃ« `.env`.
+2. Vendos dy token-a tÃ« gjatÃ«, tÃ« ndryshÃ«m: `BOT_PANEL_TOKEN` dhe `BOT_API_TOKEN`.
+3. Instalo varÃ«sitÃ« me `npm install` dhe nise me `npm start`.
+4. Hape panelin nÃ« `http://localhost:8787/?token=BOT_PANEL_TOKEN`.
+5. NÃ« WhatsApp Business: **Settings > Linked devices > Link a device**, pastaj skano QR-nÃ«.
+6. Mos e vendos dosjen `.wwebjs_auth` nÃ« GitHub dhe mos e ndaj QR-nÃ« me askÃ«nd.
+
+## Online
+
+GitHub nuk Ã«shtÃ« host 24/7 dhe Vercel nuk Ã«shtÃ« vendi i duhur pÃ«r procesin Chromium qÃ« mban WhatsApp Web. PÃ«r 24/7 duhet njÃ« server me proces tÃ« pÃ«rhershÃ«m dhe storage persistent. Dockerfile-i kÃ«tu e bÃ«n shÃ«rbimin tÃ« gatshÃ«m pÃ«r njÃ« VPS ose host tjetÃ«r always-on.

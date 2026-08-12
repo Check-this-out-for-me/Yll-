@@ -12,7 +12,14 @@ const cooldownMs = Math.max(
   0,
   Number(process.env.MESSAGE_COOLDOWN_SECONDS || 20) * 1000,
 );
+const autoReplyEnabled =
+  String(process.env.AUTO_REPLY_ENABLED || "true").toLowerCase() !== "false";
+const autoReplyCooldownMs = Math.max(
+  0,
+  Number(process.env.AUTO_REPLY_COOLDOWN_SECONDS || 120) * 1000,
+);
 const sendHistory = new Map();
+const autoReplyHistory = new Map();
 
 let state = "starting";
 let qrDataUrl = null;
@@ -164,6 +171,38 @@ client.on("ready", () => {
   console.log(
     `WhatsApp bot ready${clientInfo?.wid?.user ? ` for ${clientInfo.wid.user}` : ""}.`,
   );
+});
+
+client.on("message", async (message) => {
+  if (!autoReplyEnabled || message.fromMe || message.from.endsWith("@g.us"))
+    return;
+  const incoming = String(message.body || "").trim();
+  if (!incoming) return;
+
+  const lastReply = autoReplyHistory.get(message.from) || 0;
+  if (Date.now() - lastReply < autoReplyCooldownMs) return;
+
+  const text = incoming.toLowerCase();
+  const publicUrl =
+    process.env.PARKO_PUBLIC_URL || "https://parkokosova.vercel.app";
+  let reply = `PÃ«rshÃ«ndetje! Ky Ã«shtÃ« asistenti i Parko Kosova. Shiko parkingjet kÃ«tu: ${publicUrl}`;
+  if (/parking|parkim|vend/.test(text)) {
+    reply = `PÃ«r parkingje dhe distancÃ«n nga lokacioni yt, hap: ${publicUrl}. PÃ«r ndihmÃ«, shkruaj SUPPORT.`;
+  } else if (/support|ndihm|problem|moderator/.test(text)) {
+    reply =
+      "Mesazhi yt u pranua. NjÃ« moderator do tÃ« tÃ« pÃ«rgjigjet sÃ« shpejti.";
+  } else if (/maps|harta|lokacion|adresa/.test(text)) {
+    reply = `Hape Parko Kosova dhe pÃ«rdor butonin â€œAfÃ«r mejeâ€ pÃ«r distancÃ«n dhe rrugÃ«n nÃ« Maps: ${publicUrl}`;
+  } else if (/Ã§mim|cmim|Ã§mime|cmime|price/.test(text)) {
+    reply = `Ã‡mimet shfaqen te kartat e parkingjeve nÃ« ${publicUrl}.`;
+  }
+
+  try {
+    await message.reply(reply);
+    autoReplyHistory.set(message.from, Date.now());
+  } catch (error) {
+    lastError = error.message;
+  }
 });
 
 client.on("auth_failure", (message) => {

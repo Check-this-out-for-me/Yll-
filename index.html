@@ -144,11 +144,12 @@
         font-size: 12px;
       }
       .hero h1 {
-        font-size: clamp(48px, 8vw, 82px);
+        font-size: 76px;
         line-height: 0.94;
-        letter-spacing: -0.055em;
+        letter-spacing: 0;
         margin: 10px 0 18px;
         max-width: 900px;
+        transition: font-size 220ms ease, margin 220ms ease, line-height 220ms ease;
       }
       .hero p {
         max-width: 760px;
@@ -178,6 +179,43 @@
       }
       .section {
         padding: 28px 0;
+      }
+      .site-watermark {
+        position: fixed;
+        right: 18px;
+        top: 50%;
+        z-index: 2;
+        display: grid;
+        gap: 2px;
+        transform: translateY(-50%);
+        pointer-events: none;
+        user-select: none;
+        color: var(--accent);
+        opacity: 0.045;
+        text-align: right;
+        line-height: 0.82;
+        font-size: 82px;
+        font-weight: 950;
+        letter-spacing: 0;
+      }
+      .site-watermark span:last-child {
+        color: transparent;
+        -webkit-text-stroke: 1px var(--accent);
+        font-size: 0.62em;
+      }
+      body[data-view]:not([data-view="explore"]) .hero {
+        padding-top: 22px;
+        padding-bottom: 12px;
+      }
+      body[data-view]:not([data-view="explore"]) .hero h1 {
+        font-size: 30px;
+        line-height: 1;
+        margin: 0;
+      }
+      body[data-view]:not([data-view="explore"]) .hero p,
+      body[data-view]:not([data-view="explore"]) .hero .eyebrow,
+      body[data-view]:not([data-view="explore"]) .hero .searchbox {
+        display: none;
       }
       .tabs {
         display: flex;
@@ -544,6 +582,11 @@
       }
       @media (max-width: 620px) {
         .brand-logo { width: 132px; height: 46px; }
+        .site-watermark {
+          right: 8px;
+          font-size: 48px;
+          opacity: 0.035;
+        }
         .support-launcher { right: 14px; bottom: 84px; width: 58px; height: 58px; }
         .support-popover { right: 14px; bottom: 151px; }
         .log-item { grid-template-columns: 9px 1fr; }
@@ -629,7 +672,7 @@
       }
     </style>
   </head>
-  <body>
+  <body data-view="explore">
     <header class="top">
       <div class="wrap nav">
         <div class="brand">
@@ -656,6 +699,10 @@
         </div>
       </div>
     </header>
+    <div class="site-watermark" aria-hidden="true">
+      <span>PARKO</span>
+      <span>KOSOVA</span>
+    </div>
     <main>
       <section class="hero">
         <div class="wrap">
@@ -1320,6 +1367,7 @@
         document
           .querySelectorAll("[data-tab]")
           .forEach((b) => b.classList.toggle("active", b.dataset.tab === id));
+        document.body.dataset.view = id;
         if (id === "support") loadSupport();
         if (id !== "explore") loadPrivate();
       }

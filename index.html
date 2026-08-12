@@ -209,6 +209,53 @@
         position: relative;
         overflow: hidden;
       }
+      .visual.photo {
+        align-items: flex-start;
+        padding: 0;
+        isolation: isolate;
+      }
+      .visual.photo img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+        opacity: 0.86;
+        transition: transform 180ms ease, opacity 180ms ease;
+      }
+      .card:hover .visual.photo img {
+        transform: scale(1.035);
+        opacity: 0.98;
+      }
+      .visual.photo::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        background: linear-gradient(180deg, #06111a18 35%, #06111acc 100%);
+        pointer-events: none;
+      }
+      .visual.photo .parking-photo-badge,
+      .visual.photo .photo-credit {
+        position: absolute;
+        z-index: 2;
+      }
+      .visual.photo .parking-photo-badge {
+        top: 12px;
+        left: 12px;
+      }
+      .visual.photo .photo-credit {
+        right: 10px;
+        bottom: 8px;
+        color: #e6f4ffcc;
+        font-size: 10px;
+        text-shadow: 0 1px 3px #000;
+      }
+      .visual.photo.photo-failed {
+        background: linear-gradient(145deg, #17314d, #0b1726);
+      }
+      .visual.photo.photo-failed img {
+        display: none;
+      }
       .visual:after {
         content: "P";
         position: absolute;
@@ -687,41 +734,7 @@
                 <b id="stCars">0</b><span class="muted">Automjete</span>
               </div>
               <div class="stat">
-                <b id="stRev">0</b><span class="muted">Reviews</span>
-              </div>
-            </div>
-            <div class="split section">
-              <div class="panel">
-                <h2>Rezervimet e mia</h2>
-                <div id="bookingList" class="muted">
-                  KyÃ§u pÃ«r tÃ« parÃ« rezervimet.
-                </div>
-              </div>
-              <div>
-                <div class="panel">
-                  <h2>Profili</h2>
-                  <div id="profileBox" class="muted">Nuk je i kyÃ§ur.</div>
-                </div>
-                <div class="panel">
-                  <h2>Automjetet</h2>
-                  <div class="form">
-                    <input
-                      id="carName"
-                      class="input"
-                      placeholder="Golf 8"
-                    /><input
-                      id="carPlate"
-                      class="input"
-                      placeholder="01-123-AB"
-                    /><button class="btn primary full" onclick="addVehicle()">
-                      Shto automjet
-                    </button>
-                  </div>
-                  <div id="vehicleList"></div>
-                </div>
-                <div class="panel">
-                  <h2>Favorites</h2>
-        …14232 tokens truncated…pportMessages.scrollHeight;
+                <b id="stRev">0</b><span class="muted">Reviews<…15332 tokens truncated…pportMessages.scrollHeight;
       }
       async function createSupportThread() {
         if (!requireUser()) return;
@@ -1147,3 +1160,4 @@
     </script>
   </body>
 </html>
+

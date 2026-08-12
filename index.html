@@ -629,7 +629,7 @@
         </div>
         <div class="navr">
           <button class="btn hideMob" onclick="tab('explore')">Explore</button
-          ><button class="btn" onclick="toggleTheme()">â—</button
+          ><button class="btn" onclick="toggleTheme()">◐</button
           ><button id="loginBtn" class="btn" onclick="openAuth('login')">
             Log in</button
           ><button
@@ -654,8 +654,8 @@
           <div class="eyebrow">Smart parking platform</div>
           <h1>Gjeje. Rezervoje.<br />Parko pa stres.</h1>
           <p>
-            PlatformÃ« mobile-first pÃ«r parkingje nÃ« KosovÃ« me kÃ«rkim, rezervim,
-            QR pass, favorites, reviews, automjete dhe menaxhim tÃ« rezervimeve.
+            Platformë mobile-first për parkingje në Kosovë me kërkim, rezervim,
+            QR pass, favorites, reviews, automjete dhe menaxhim të rezervimeve.
           </p>
           <div class="searchbox">
             <select id="city" class="input"></select
@@ -664,13 +664,13 @@
               class="input"
               placeholder="Emri ose lokacioni"
             /><select id="feature" class="input">
-              <option value="">TÃ« gjitha</option>
+              <option value="">Të gjitha</option>
               <option>EV charger</option>
               <option>Covered</option>
               <option>Airport</option>
               <option>Business</option></select
-            ><button class="btn primary" onclick="searchMap()">KÃ«rko</button>
-            <button class="btn" onclick="nearMe()">AfÃ«r meje</button>
+            ><button class="btn primary" onclick="searchMap()">Kërko</button>
+            <button class="btn" onclick="nearMe()">Afër meje</button>
           </div>
         </div>
       </section>
@@ -713,7 +713,7 @@
             >
               <div>
                 <h2 style="margin: 0">Parkingjet</h2>
-                <div class="muted">Listime tÃ« aprovuara nga databaza</div>
+                <div class="muted">Listime të aprovuara nga databaza</div>
               </div>
               <span id="userPill" class="badge">Guest</span>
             </div>
@@ -734,7 +734,1535 @@
                 <b id="stCars">0</b><span class="muted">Automjete</span>
               </div>
               <div class="stat">
-                <b id="stRev">0</b><span class="muted">Reviews<…15332 tokens truncated…pportMessages.scrollHeight;
+                <b id="stRev">0</b><span class="muted">Reviews</span>
+              </div>
+            </div>
+            <div class="split section">
+              <div class="panel">
+                <h2>Rezervimet e mia</h2>
+                <div id="bookingList" class="muted">
+                  Kyçu për të parë rezervimet.
+                </div>
+              </div>
+              <div>
+                <div class="panel">
+                  <h2>Profili</h2>
+                  <div id="profileBox" class="muted">Nuk je i kyçur.</div>
+                </div>
+                <div class="panel">
+                  <h2>Automjetet</h2>
+                  <div class="form">
+                    <input
+                      id="carName"
+                      class="input"
+                      placeholder="Golf 8"
+                    /><input
+                      id="carPlate"
+                      class="input"
+                      placeholder="01-123-AB"
+                    /><button class="btn primary full" onclick="addVehicle()">
+                      Shto automjet
+                    </button>
+                  </div>
+                  <div id="vehicleList"></div>
+                </div>
+                <div class="panel">
+                  <h2>Favorites</h2>
+                  <div id="favoriteList"></div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section id="passes" class="hidden section">
+            <div class="panel">
+              <h2>Mobile Parking Pass</h2>
+              <div class="form">
+                <input
+                  id="waPhone"
+                  class="input full"
+                  placeholder="Numri WhatsApp, p.sh. +38344123456"
+                />
+                <button class="btn primary full" onclick="saveWhatsAppPhone()">
+                  Ruaj numrin WhatsApp
+                </button>
+              </div>
+              <p id="waMsg" class="muted"></p>
+              <div id="passList" class="muted">Kyçu për të parë QR pass.</div>
+            </div>
+          </section>
+          <section id="reviews" class="hidden section">
+            <div class="split">
+              <div class="panel">
+                <h2>Shkruaj review</h2>
+                <div class="form">
+                  <input
+                    id="revParking"
+                    class="input full"
+                    placeholder="Parkingu"
+                  /><select id="revStars" class="input">
+                    <option>5</option>
+                    <option>4</option>
+                    <option>3</option>
+                    <option>2</option>
+                    <option>1</option></select
+                  ><input
+                    id="revCity"
+                    class="input"
+                    placeholder="Qyteti"
+                  /><textarea
+                    id="revText"
+                    class="input full"
+                    rows="5"
+                    placeholder="Eksperienca..."
+                  ></textarea
+                  ><button class="btn primary full" onclick="addReview()">
+                    Publiko review
+                  </button>
+                </div>
+              </div>
+              <div class="panel">
+                <h2>Reviews</h2>
+                <div id="reviewList"></div>
+              </div>
+            </div>
+          </section>
+          <section id="support" class="hidden section">
+            <div
+              class="row"
+              style="justify-content: space-between; margin-bottom: 16px"
+            >
+              <div>
+                <h2 style="margin: 0">Live Support</h2>
+                <div id="supportRoleHint" class="muted">
+                  Pyet moderatoren për rezervime, parkingje ose probleme në
+                  faqe.
+                </div>
+              </div>
+              <span id="supportBadge" class="badge">Klient</span>
+            </div>
+            <div id="supportLeadBox" class="panel hidden" style="margin-bottom:14px">
+              <div class="admin-panel-title"><h3>Kërkesa të shpejta nga widget-i</h3><span class="badge good">Staff inbox</span></div>
+              <div id="supportLeadList" class="admin-list"></div>
+            </div>
+            <div class="split">
+              <div>
+                <div class="panel">
+                  <h2 id="supportInboxTitle">Bisedat</h2>
+                  <div id="supportThreads"></div>
+                </div>
+                <div id="supportNewBox" class="panel">
+                  <h2>Hap bisedë të re</h2>
+                  <div class="form">
+                    <input
+                      id="supportSubject"
+                      class="input full"
+                      placeholder="P.sh. Kam problem me rezervimin"
+                    />
+                    <select id="supportPriority" class="input full">
+                      <option value="normal">Normal</option>
+                      <option value="urgent">Urgjente</option>
+                    </select>
+                    <textarea
+                      id="supportFirstMsg"
+                      class="input full"
+                      rows="4"
+                      placeholder="Shkruaj mesazhin..."
+                    ></textarea>
+                    <button
+                      class="btn primary full"
+                      onclick="createSupportThread()"
+                    >
+                      Dërgo te Live Support
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="panel">
+                <h2 id="supportConversationTitle">Biseda</h2>
+                <div id="supportMessages" class="chatlog muted">
+                  Zgjidh ose hap një bisedë.
+                </div>
+                <div class="form" style="margin-top: 10px">
+                  <textarea
+                    id="supportReply"
+                    class="input full"
+                    rows="3"
+                    placeholder="Përgjigju..."
+                  ></textarea>
+                  <button class="btn primary" onclick="sendSupportReply()">
+                    Dërgo
+                  </button>
+                  <button class="btn" onclick="closeSupportThread()">
+                    Mbyll
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section id="owner" class="hidden section">
+            <div class="split">
+              <div class="panel">
+                <h2>Parking Owner Portal</h2>
+                <div class="form">
+                  <input
+                    id="ownName"
+                    class="input full"
+                    placeholder="Emri i parkingut"
+                  /><input
+                    id="ownCity"
+                    class="input"
+                    placeholder="Qyteti"
+                  /><input
+                    id="ownPrice"
+                    class="input"
+                    type="number"
+                    step="0.1"
+                    placeholder="€/orë"
+                  /><input
+                    id="ownCap"
+                    class="input"
+                    type="number"
+                    placeholder="Kapaciteti"
+                  /><input
+                    id="ownFeatures"
+                    class="input full"
+                    placeholder="EV charger, Covered, CCTV..."
+                  /><button class="btn primary full" onclick="submitOwner()">
+                    Dërgo për aprovim
+                  </button>
+                </div>
+              </div>
+              <div class="panel">
+                <h2>Kërkesat e mia</h2>
+                <div id="ownerList"></div>
+              </div>
+            </div>
+          </section>
+          <section id="admin" class="hidden section">
+            <div class="admin-head" style="margin-bottom:16px">
+              <div>
+                <div class="admin-kicker">Parko control center</div>
+                <h2 style="margin:6px 0 4px">Admin panel</h2>
+                <div class="muted">Aktivitete, përdorues, rezervime, support dhe qasje të ndara qartë.</div>
+              </div>
+              <div class="row"><span class="badge good">Live data</span><button class="btn" onclick="loadAdmin()">Rifresko</button></div>
+            </div>
+            <div class="stats">
+              <div class="stat">
+                <b id="aPending">0</b><span class="muted">Pending</span>
+              </div>
+              <div class="stat">
+                <b id="aRevenue">€0</b><span class="muted">Revenue</span>
+              </div>
+              <div class="stat">
+                <b id="aOwners">0</b><span class="muted">Owner requests</span>
+              </div>
+              <div class="stat">
+                <b id="aReports">0</b><span class="muted">Reports</span>
+              </div>
+              <div class="stat">
+                <b id="aUsers">0</b><span class="muted">Users</span>
+              </div>
+              <div class="stat">
+                <b id="aSupport">0</b><span class="muted">Support open</span>
+              </div>
+              <div class="stat">
+                <b id="aGuests">0</b><span class="muted">Guest visits</span>
+              </div>
+            </div>
+            <div class="split section">
+              <div class="panel">
+                <div class="admin-panel-title"><h3>Aktivitetet e fundit</h3><span class="badge">audit log</span></div>
+                <div id="adminActivity" class="admin-list"></div>
+              </div>
+              <div class="panel">
+                <h2>Rezervime</h2>
+                <div id="adminBookings"></div>
+              </div>
+              <div>
+                <div class="panel">
+                  <h2>Përdoruesit</h2>
+                  <div class="form">
+                    <input
+                      id="moderatorEmail"
+                      class="input full"
+                      type="email"
+                      placeholder="email i moderatorit"
+                    />
+                    <button
+                      class="btn primary full"
+                      onclick="addModeratorInvite()"
+                    >
+                      Shto moderator support
+                    </button>
+                    <input id="ownerEmail" class="input full" type="email" placeholder="email për Owner Portal" />
+                    <button class="btn full" onclick="grantOwnerAccess(ownerEmail.value)">Jep qasje Owner Portal</button>
+                  </div>
+                  <div id="adminUsers"></div>
+                </div>
+                <div class="panel">
+                  <div class="admin-panel-title"><h3>Qendra e supportit</h3><span id="adminSupportStatus" class="badge good">Live</span></div>
+                  <div id="adminSupportLeads" class="admin-list"></div>
+                </div>
+                <div class="panel">
+                  <h2>Owner approvals</h2>
+                  <div id="adminOwners"></div>
+                </div>
+                <div class="panel">
+                  <h2>Reports</h2>
+                  <div id="adminReports"></div>
+                </div>
+                <div class="panel">
+                  <h2>Mysafirët</h2>
+                  <div id="adminGuests"></div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+    <footer class="footer">
+      <div class="wrap">
+        Parko Kosova · Supabase Auth & Database · Maps Links · QR Pass · Owner
+        Portal · Admin Analytics
+      </div>
+    </footer>
+    <div class="bottomnav">
+      <button onclick="tab('explore')"><b>⌕</b>Explore</button
+      ><button onclick="tab('dashboard')"><b>▣</b>Bookings</button
+      ><button onclick="tab('passes')"><b>▦</b>Pass</button
+      ><button onclick="tab('support')"><b>?</b>Support</button
+      ><button id="ownerBottomBtn" class="hidden" onclick="tab('owner')"><b>+</b>Owner</button>
+    </div>
+    <button class="support-launcher" aria-label="Hap Live Support" title="Hap Live Support" onclick="toggleSupportPopover()">
+      <img src="/support-headset.webp" alt="Live Support" />
+      <span id="supportCount" class="support-count hidden">!</span>
+    </button>
+    <div id="supportPopover" class="support-popover hidden">
+      <div class="row" style="justify-content:space-between;align-items:flex-start">
+        <div><h3>Live Support</h3><div class="muted" style="margin-top:4px">Na shkruaj dhe ekipi do tÃ« tÃ« pÃ«rgjigjet.</div></div>
+        <button class="btn" onclick="toggleSupportPopover()" aria-label="Mbyll">X</button>
+      </div>
+      <div id="supportQuickAuth" class="muted" style="margin-top:12px"></div>
+      <div id="supportQuickForm" class="form" style="margin-top:12px">
+        <input id="quickSupportName" class="input full" placeholder="Emri dhe mbiemri" />
+        <input id="quickSupportContact" class="input full" placeholder="Email ose telefon" />
+        <select id="quickSupportPriority" class="input full"><option value="normal">KÃ«rkesÃ« normale</option><option value="urgent">Urgjente</option></select>
+        <textarea id="quickSupportMessage" class="input full" rows="4" placeholder="Si mund tÃ« tÃ« ndihmojmÃ«?"></textarea>
+        <button class="btn primary full" onclick="sendQuickSupport()">KÃ«rko tÃ« flas me ekipin</button>
+      </div>
+      <button id="quickSupportChatBtn" class="btn full hidden" style="margin-top:12px" onclick="toggleSupportPopover();tab('support')">Hap bisedat e mia</button>
+      <p id="quickSupportMsg" class="muted"></p>
+    </div>
+    <div id="toast" class="toast"></div>
+    <div id="authModal" class="modal">
+      <div class="panel">
+        <div class="row" style="justify-content: space-between">
+          <h2 id="authTitle">Log in</h2>
+          <button class="btn" onclick="authModal.classList.remove('on')">
+            X
+          </button>
+        </div>
+        <button
+          class="btn google full"
+          style="width: 100%; margin-bottom: 10px"
+          onclick="googleLogin()"
+        >
+          G&nbsp;&nbsp;Vazhdo me Google
+        </button>
+        <button
+          class="btn full"
+          style="width: 100%; margin-bottom: 10px"
+          onclick="openGuestForm()"
+        >
+          Vazhdo si mysafir
+        </button>
+        <div class="divider">ose me email</div>
+        <div class="form">
+          <input
+            id="aName"
+            class="input full hidden"
+            placeholder="Emri dhe mbiemri"
+          /><input
+            id="aEmail"
+            class="input full"
+            type="email"
+            placeholder="Email"
+          /><input
+            id="aPass"
+            class="input full"
+            type="password"
+            placeholder="Password"
+          /><button id="authSubmit" class="btn primary full" onclick="doAuth()">
+            Vazhdo</button
+          ><button class="btn full" onclick="emailLinkLogin()">
+            Merr link hyrjeje në email</button
+          ><button class="btn full" onclick="resetPassword()">
+            Harrova password-in
+          </button>
+        </div>
+        <p id="authMsg" class="muted"></p>
+        <div class="divider">ose me numër telefoni</div>
+        <div class="form">
+          <input
+            id="aPhone"
+            class="input full"
+            inputmode="tel"
+            placeholder="WhatsApp, p.sh. +38344123456"
+          /><button
+            id="phoneSendBtn"
+            class="btn primary full"
+            onclick="sendWhatsAppLoginCode()"
+          >
+            Dërgo kodin në WhatsApp
+          </button>
+          <div id="phoneOtpWrap" class="form full hidden">
+            <input
+              id="aPhoneOtp"
+              class="input full"
+              inputmode="numeric"
+              maxlength="6"
+              placeholder="Kodi 6-shifror"
+            /><button
+              id="phoneVerifyBtn"
+              class="btn primary full"
+              onclick="verifyWhatsAppLoginCode()"
+            >
+              Verifiko dhe hyr
+            </button>
+          </div>
+        </div>
+        <p id="phoneAuthMsg" class="muted"></p>
+        <div id="authSwitch" class="muted" style="margin-top: 10px"></div>
+      </div>
+    </div>
+    <div id="guestModal" class="modal">
+      <div class="panel">
+        <div class="row" style="justify-content: space-between">
+          <h2>Hyr si mysafir</h2>
+          <button class="btn" onclick="guestModal.classList.remove('on')">
+            X
+          </button>
+        </div>
+        <p class="muted">Vendos të dhënat që të regjistrohet vizita jote.</p>
+        <div class="form">
+          <input
+            id="guestName"
+            class="input full"
+            placeholder="Emri dhe mbiemri"
+            autocomplete="name"
+          />
+          <input
+            id="guestPhone"
+            class="input full"
+            inputmode="tel"
+            placeholder="Numri i telefonit, p.sh. +38344123456"
+            autocomplete="tel"
+          />
+          <button class="btn primary full" onclick="guestLogin()">
+            Vazhdo si mysafir
+          </button>
+        </div>
+        <p id="guestMsg" class="muted"></p>
+      </div>
+    </div>
+    <div id="reserveModal" class="modal">
+      <div class="panel">
+        <div class="row" style="justify-content: space-between">
+          <h2>Rezervo parking</h2>
+          <button class="btn" onclick="reserveModal.classList.remove('on')">
+            X
+          </button>
+        </div>
+        <div class="form">
+          <input id="rParking" class="input full" readonly /><input
+            id="rDate"
+            class="input"
+            type="date"
+          /><input id="rTime" class="input" type="time" /><select
+            id="rDur"
+            class="input"
+          >
+            <option value="1">1 orë</option>
+            <option value="2">2 orë</option>
+            <option value="4">4 orë</option>
+            <option value="8">8 orë</option>
+            <option value="24">1 ditë</option></select
+          ><input id="rPlate" class="input" placeholder="Targa" /><input
+            id="rPromo"
+            class="input"
+            placeholder="Promo code"
+          /><button class="btn primary full" onclick="saveBooking()">
+            Krijo rezervimin
+          </button>
+        </div>
+        <p id="rMsg" class="muted"></p>
+      </div>
+    </div>
+    <script>
+      const { createClient } = supabase;
+      const sb = createClient(
+        "https://coswvjmodkcpdrntwmyz.supabase.co",
+        "sb_publishable_B7OvsXnx7Rol8a8KmChX5Q_GQb9nC8o",
+      );
+      const ADMIN = "hyseniyll44@gmail.com";
+      const APP_URL = "https://parko-gjilan.vercel.app";
+      let user = null,
+        profile = null,
+        currentRole = "customer",
+        authMode = "login",
+        authPhone = "",
+        activePrice = 1.5,
+        userCoords = null,
+        activeSupportThread = null,
+        supportChannel = null,
+        guestMode = false;
+      const C = [
+        "Prishtinë",
+        "Prizren",
+        "Pejë",
+        "Gjakovë",
+        "Gjilan",
+        "Ferizaj",
+        "Mitrovicë",
+        "Vushtrri",
+        "Podujevë",
+        "Suharekë",
+        "Rahovec",
+        "Lipjan",
+        "Fushë Kosovë",
+        "Drenas",
+        "Skenderaj",
+        "Malishevë",
+        "Kamenicë",
+        "Deçan",
+        "Istog",
+        "Klinë",
+        "Dragash",
+        "Kaçanik",
+        "Shtime",
+        "Viti",
+      ];
+      city.add(new Option("Të gjitha qytetet", ""));
+      C.forEach((x) => city.add(new Option(x, x)));
+      city.value = "";
+      const esc = (s) =>
+        String(s || "").replace(
+          /[&<>\"]/g,
+          (c) =>
+            ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '\"': "&quot;" })[c],
+        );
+      function note(t) {
+        toast.textContent = t;
+        toast.style.display = "block";
+        setTimeout(() => (toast.style.display = "none"), 1800);
+      }
+      function authErrorText(error, channel = "email") {
+        const message = error?.message || String(error || "");
+        const lower = message.toLowerCase();
+        if (
+          channel === "phone" &&
+          (lower.includes("unsupported phone provider") ||
+            lower.includes("phone_provider_disabled"))
+        )
+          return "WhatsApp login nuk eshte aktivizuar ende nga sherbimi i autentikimit. Perdore hyrjen me email ose Google per momentin.";
+        if (lower.includes("rate") || lower.includes("too many")) {
+          if (channel === "email")
+            return "Limiti i email-it u tejkalua për momentin. Përdor Google, WhatsApp/telefon, ose provo përsëri pas rreth 1 ore. Për zgjidhje të përhershme duhet Custom SMTP në Supabase.";
+          return "Limiti i kodeve u tejkalua për momentin. Provo pak më vonë ose përdor një mënyrë tjetër hyrjeje.";
+        }
+        if (lower.includes("not enabled") || lower.includes("disabled"))
+          return message + " Aktivizo këtë provider në Supabase Auth.";
+        return message;
+      }
+      function toggleTheme() {
+        document.body.classList.toggle("light");
+        localStorage.setItem(
+          "theme",
+          document.body.classList.contains("light") ? "light" : "dark",
+        );
+      }
+      if (localStorage.getItem("theme") === "light")
+        document.body.classList.add("light");
+      const isAdmin = () => currentRole === "admin";
+      const isOwner = () => isAdmin() || currentRole === "owner";
+      const isSupportStaff = () => ["admin", "moderator"].includes(currentRole);
+      const isGuestUser = () => guestMode || Boolean(user?.is_anonymous);
+      function tab(id) {
+        if (id !== "explore" && (!user || isGuestUser())) {
+          openAuth("login");
+          if (isGuestUser())
+            note("Mysafiri mund të shikojë parkingjet, jo të rezervojë.");
+          return;
+        }
+        if (id === "admin" && !isAdmin()) return;
+        if (id === "owner" && !isOwner()) return;
+        [
+          "explore",
+          "dashboard",
+          "passes",
+          "reviews",
+          "support",
+          "owner",
+          "admin",
+        ].forEach((x) =>
+          document.getElementById(x).classList.toggle("hidden", x !== id),
+        );
+        document
+          .querySelectorAll("[data-tab]")
+          .forEach((b) => b.classList.toggle("active", b.dataset.tab === id));
+        if (id === "support") loadSupport();
+        if (id !== "explore") loadPrivate();
+      }
+      function openAuth(m) {
+        authMode = m;
+        authTitle.textContent = m === "signup" ? "Krijo llogari" : "Log in";
+        aName.classList.toggle("hidden", m !== "signup");
+        authMsg.textContent = "";
+        phoneAuthMsg.textContent = "";
+        phoneOtpWrap.classList.add("hidden");
+        aPhoneOtp.value = "";
+        phoneSendBtn.disabled = false;
+        phoneSendBtn.textContent = "Dërgo kodin në WhatsApp";
+        phoneVerifyBtn.disabled = false;
+        authSwitch.innerHTML =
+          m === "signup"
+            ? `Ke llogari? <button class='btn' style='padding:6px 9px' onclick=\"openAuth('login')\">Log in</button>`
+            : `Nuk ke llogari? <button class='btn' style='padding:6px 9px' onclick=\"openAuth('signup')\">Sign up</button>`;
+        authModal.classList.add("on");
+      }
+      async function googleLogin() {
+        guestMode = false;
+        const { error } = await sb.auth.signInWithOAuth({
+          provider: "google",
+          options: { redirectTo: APP_URL },
+        });
+        if (error) {
+          authMsg.textContent =
+            "Google login nuk është aktivizuar ende: " +
+            authErrorText(error, "google");
+        }
+      }
+      function openGuestForm() {
+        authModal.classList.remove("on");
+        guestMsg.textContent = "";
+        guestModal.classList.add("on");
+        guestName.focus();
+      }
+      async function guestLogin() {
+        const name = guestName.value.trim();
+        const phone = String(guestPhone.value || "").replace(/[^\d+]/g, "");
+        if (name.length < 2 || phone.length < 8 || !phone.startsWith("+")) {
+          guestMsg.textContent =
+            "Shkruaj emrin dhe numrin me prefiks shteti, p.sh. +38344123456.";
+          return;
+        }
+        guestMsg.textContent = "Po regjistrohet hyrja si mysafir...";
+        const sessionId =
+          localStorage.getItem("parko_guest_session") || crypto.randomUUID();
+        localStorage.setItem("parko_guest_session", sessionId);
+        const { error } = await sb.from("parko_guest_visits").insert({
+          full_name: name,
+          phone,
+          session_id: sessionId,
+        });
+        if (error) {
+          guestMsg.textContent = error.message;
+          return;
+        }
+        guestMode = true;
+        user = null;
+        profile = null;
+        currentRole = "customer";
+        guestModal.classList.remove("on");
+        await syncUser();
+        note("U hap shikimi si mysafir.");
+        return;
+        authMsg.textContent = "Po hapet hyrja si mysafir...";
+        const { error: legacyError } = await sb.auth.signInAnonymously({
+          options: { data: { full_name: "Mysafir" } },
+        });
+        if (error) {
+          authMsg.textContent =
+            authErrorText(error, "guest") +
+            " Aktivizo Anonymous sign-ins në Supabase Auth për këtë opsion.";
+          return;
+        }
+        authMsg.textContent = "U kyçe si mysafir.";
+        await syncUser();
+        setTimeout(() => authModal.classList.remove("on"), 350);
+      }
+      async function doAuth() {
+        const email = aEmail.value.trim(),
+          password = aPass.value,
+          name = aName.value.trim();
+        if (!email || !password || (authMode === "signup" && !name)) {
+          authMsg.textContent = "Plotëso fushat.";
+          return;
+        }
+        authSubmit.disabled = true;
+        if (authMode === "signup") {
+          const { data, error } = await sb.auth.signUp({
+            email,
+            password,
+            options: {
+              data: { full_name: name },
+              emailRedirectTo: APP_URL,
+            },
+          });
+          if (error) authMsg.textContent = authErrorText(error, "email");
+          else {
+            if (data.user)
+              await sb.from("parko_profiles").upsert({
+                id: data.user.id,
+                full_name: name,
+                email: email.toLowerCase(),
+              });
+            authMode = "login";
+            authTitle.textContent = "Log in";
+            aName.classList.add("hidden");
+            authMsg.textContent =
+              "Llogaria u krijua. Nëse Confirm email është aktiv në Supabase, kontrollo email-in për verifikim dhe pastaj hyr.";
+            authSwitch.innerHTML = "Tani vazhdo me Log in.";
+            signupBtn.classList.add("hidden");
+            loginBtn.classList.remove("hidden");
+          }
+        } else {
+          const { error } = await sb.auth.signInWithPassword({
+            email,
+            password,
+          });
+          authMsg.textContent = error
+            ? authErrorText(error, "email")
+            : "U kyçe me sukses.";
+          if (!error) {
+            guestMode = false;
+            setTimeout(() => authModal.classList.remove("on"), 350);
+          }
+        }
+        authSubmit.disabled = false;
+        await syncUser();
+      }
+      async function emailLinkLogin() {
+        const email = aEmail.value.trim();
+        if (!email) {
+          authMsg.textContent = "Shkruaj email-in.";
+          return;
+        }
+        authMsg.textContent = "Po dergohet linku i hyrjes ne email...";
+        const { error } = await sb.auth.signInWithOtp({
+          email,
+          options: {
+            emailRedirectTo: APP_URL,
+            shouldCreateUser: true,
+          },
+        });
+        authMsg.textContent = error
+          ? authErrorText(error, "email")
+          : "Linku i hyrjes u dergua. Kontrollo email-in dhe kliko linkun.";
+      }
+      const normalizeAuthPhone = () =>
+        String(aPhone.value || "").replace(/[^\d+]/g, "");
+      async function sendWhatsAppLoginCode() {
+        const phone = normalizeAuthPhone();
+        if (!phone || phone.length < 8 || !phone.startsWith("+")) {
+          phoneAuthMsg.textContent =
+            "Shkruaj numrin me prefiks shteti, p.sh. +38344123456.";
+          return;
+        }
+        phoneSendBtn.disabled = true;
+        phoneAuthMsg.textContent = "Po dërgohet kodi në WhatsApp...";
+        const { error } = await sb.auth.signInWithOtp({
+          phone,
+          options: {
+            channel: "whatsapp",
+            shouldCreateUser: true,
+          },
+        });
+        phoneSendBtn.disabled = false;
+        if (error) {
+          phoneSendBtn.textContent = "Dërgo kodin në WhatsApp";
+          if (
+            String(error?.message || error || "")
+              .toLowerCase()
+              .includes("unsupported phone provider")
+          ) {
+            phoneAuthMsg.textContent =
+              "WhatsApp login nuk eshte aktivizuar. Perdore email ose Google, dhe aktivizo Phone provider me Twilio WhatsApp ne Supabase.";
+            return;
+          }
+          phoneAuthMsg.textContent =
+            authErrorText(error, "phone") +
+            " Aktivizo Phone provider dhe Twilio WhatsApp sender në Supabase.";
+          return;
+        }
+        authPhone = phone;
+        phoneSendBtn.textContent = "Dërgo kod të ri në WhatsApp";
+        phoneOtpWrap.classList.remove("hidden");
+        aPhoneOtp.focus();
+        phoneAuthMsg.textContent =
+          "Kodi u dërgua në WhatsApp. Shkruaje kodin 6-shifror këtu.";
+      }
+      async function verifyWhatsAppLoginCode() {
+        const phone = authPhone || normalizeAuthPhone();
+        const token = String(aPhoneOtp.value || "").replace(/\D/g, "");
+        if (!phone || token.length !== 6) {
+          phoneAuthMsg.textContent = "Shkruaj numrin dhe kodin 6-shifror.";
+          return;
+        }
+        phoneVerifyBtn.disabled = true;
+        phoneAuthMsg.textContent = "Po verifikohet kodi...";
+        const { data, error } = await sb.auth.verifyOtp({
+          phone,
+          token,
+          type: "sms",
+        });
+        phoneVerifyBtn.disabled = false;
+        if (error) {
+          phoneAuthMsg.textContent = authErrorText(error, "phone");
+          return;
+        }
+        const signedUser = data?.user;
+        guestMode = false;
+        if (signedUser) {
+          await sb.from("parko_profiles").upsert(
+            {
+              id: signedUser.id,
+              email: signedUser.email?.toLowerCase() || null,
+              phone,
+              full_name:
+                signedUser.user_metadata?.full_name || phone || "Përdorues",
+            },
+            { onConflict: "id" },
+          );
+        }
+        phoneAuthMsg.textContent = "U kyçe me sukses.";
+        await syncUser();
+        setTimeout(() => authModal.classList.remove("on"), 350);
+      }
+      async function resetPassword() {
+        const email = aEmail.value.trim();
+        if (!email) {
+          authMsg.textContent = "Shkruaj email-in.";
+          return;
+        }
+        const { error } = await sb.auth.resetPasswordForEmail(email, {
+          redirectTo: APP_URL,
+        });
+        authMsg.textContent = error
+          ? authErrorText(error, "email")
+          : "Email-i për reset u dërgua.";
+      }
+      async function logout() {
+        guestMode = false;
+        await sb.auth.signOut();
+        note("U çkyçe");
+        tab("explore");
+      }
+      async function syncUser() {
+        const { data } = await sb.auth.getUser();
+        user = data.user || null;
+        const on = !!user || guestMode;
+        profile = null;
+        currentRole = "customer";
+        if (user) {
+          await sb.from("parko_profiles").upsert(
+            {
+              id: user.id,
+              email: user.email?.toLowerCase() || null,
+              phone: user.phone || null,
+              full_name:
+                user.user_metadata?.full_name ||
+                user.email?.split("@")[0] ||
+                user.phone ||
+                "Përdorues",
+            },
+            { onConflict: "id" },
+          );
+          const [{ data: prof }, { data: role }] = await Promise.all([
+            sb
+              .from("parko_profiles")
+              .select("id,email,full_name,phone,role,created_at")
+              .eq("id", user.id)
+              .maybeSingle(),
+            sb.rpc("parko_current_role"),
+          ]);
+          profile = prof || null;
+          currentRole =
+            role ||
+            profile?.role ||
+            (user.email?.toLowerCase() === ADMIN ? "admin" : "customer");
+          setupSupportRealtime();
+        } else if (supportChannel) {
+          sb.removeChannel(supportChannel);
+          supportChannel = null;
+        }
+        loginBtn.classList.toggle("hidden", on);
+        signupBtn.classList.toggle("hidden", on);
+        accountBtn.classList.toggle("hidden", !on);
+        accountBtn.textContent = isGuestUser()
+          ? "Kyçu për rezervim"
+          : "Llogaria";
+        document.querySelectorAll("[data-tab]").forEach((b) => {
+          b.classList.toggle(
+            "hidden",
+            isGuestUser() && b.dataset.tab !== "explore",
+          );
+        });
+        const accountLabel = guestMode
+          ? "Mysafir"
+          : profile?.full_name ||
+            user?.user_metadata?.full_name ||
+            user?.email ||
+            profile?.phone ||
+            user?.phone ||
+            "Përdorues";
+        const contactLabel = guestMode
+          ? "Vetem shikim"
+          : profile?.email ||
+            user?.email ||
+            profile?.phone ||
+            user?.phone ||
+            "";
+        const contactBadge = isGuestUser()
+          ? "<span class='badge'>Vetëm shikim</span>"
+          : user?.email || profile?.email
+            ? `<span class='badge ${user.email_confirmed_at || user.confirmed_at ? "good" : ""}'>${user.email_confirmed_at || user.confirmed_at ? "Email i verifikuar" : "Email ende pa verifikim"}</span>`
+            : `<span class='badge good'>Telefoni i verifikuar</span>`;
+        userPill.textContent = on
+          ? isGuestUser()
+            ? "Mysafir"
+            : accountLabel
+          : "Guest";
+        adminTabBtn.classList.toggle("hidden", !on || !isAdmin());
+        ownerTabBtn.classList.toggle("hidden", !on || !isOwner());
+        ownerBottomBtn.classList.toggle("hidden", !on || !isOwner());
+        profileBox.innerHTML = on
+          ? `<b>${esc(accountLabel)}</b><br>${esc(contactLabel)}<br><span class='badge'>${esc(currentRole)}</span> ${contactBadge}<br><br><button class='btn danger' onclick='logout()'>Log out</button>`
+          : "Nuk je i kyçur.";
+        if (on && profile?.phone) waPhone.value = profile.phone;
+        await loadPrivate();
+      }
+      const norm = (s) =>
+        String(s || "")
+          .trim()
+          .toLowerCase();
+      const parkingName = (p) => p.name || p.parking_name || "Parking";
+      const parkingCity = (p) => p.city || "";
+      const parkingAddress = (p) => p.address || p.location || p.city || "";
+      const parkingFeatures = (p) =>
+        Array.isArray(p.features) ? p.features : [];
+      const cityPhotoSources = [
+        {
+          match: ["prishtin", "pristina"],
+          url: "https://upload.wikimedia.org/wikipedia/commons/7/72/Prishtina_street.jpg",
+          credit: "Wikimedia Commons",
+          source: "https://commons.wikimedia.org/wiki/File:Prishtina_street.jpg",
+        },
+        {
+          match: ["prizren"],
+          url: "https://upload.wikimedia.org/wikipedia/commons/3/37/Qendra_e_qytetit%2C_Prizren_2018_08.jpg",
+          credit: "Wikimedia Commons",
+          source: "https://commons.wikimedia.org/wiki/File:Qendra_e_qytetit,_Prizren_2018_08.jpg",
+        },
+        {
+          match: ["gjilan", "gnjilan"],
+          url: "https://upload.wikimedia.org/wikipedia/commons/7/79/GJILAN_KOSOVE_%286%29.jpg",
+          credit: "Wikimedia Commons",
+          source: "https://commons.wikimedia.org/wiki/File:GJILAN_KOSOVE_(6).jpg",
+        },
+        {
+          match: ["pej", "peja"],
+          url: "https://upload.wikimedia.org/wikipedia/commons/a/a0/PEJE_KOSOVE_%2830%29.jpg",
+          credit: "Wikimedia Commons",
+          source: "https://commons.wikimedia.org/wiki/File:PEJE_KOSOVE_(30).jpg",
+        },
+        {
+          match: ["ferizaj", "uro"],
+          url: "https://upload.wikimedia.org/wikipedia/commons/8/89/Ferizaj2.JPG",
+          credit: "Wikimedia Commons",
+          source: "https://commons.wikimedia.org/wiki/File:Ferizaj2.JPG",
+        },
+      ];
+      const parkingPhoto = (p) => {
+        const custom = p.image_url || p.imageUrl || p.photo_url || p.photoUrl;
+        if (custom && /^https?:\/\//i.test(custom))
+          return {
+            url: custom,
+            credit: "Foto e parkingut",
+            source: custom,
+          };
+        const cityKey = norm(parkingCity(p));
+        const cityPhoto = cityPhotoSources.find((item) =>
+          item.match.some((part) => cityKey.includes(part)),
+        );
+        return (
+          cityPhoto || {
+            url: "https://upload.wikimedia.org/wikipedia/commons/7/72/Prishtina_street.jpg",
+            credit: "Wikimedia Commons",
+            source: "https://commons.wikimedia.org/wiki/File:Prishtina_street.jpg",
+          }
+        );
+      };
+      const parkingCoords = (p) => {
+        const lat = Number(p.lat ?? p.latitude);
+        const lng = Number(p.lng ?? p.lon ?? p.longitude);
+        return Number.isFinite(lat) && Number.isFinite(lng)
+          ? { lat, lng }
+          : null;
+      };
+      const distanceKm = (a, b) => {
+        const r = 6371;
+        const dLat = ((b.lat - a.lat) * Math.PI) / 180;
+        const dLng = ((b.lng - a.lng) * Math.PI) / 180;
+        const s1 = Math.sin(dLat / 2) ** 2;
+        const s2 =
+          Math.cos((a.lat * Math.PI) / 180) *
+          Math.cos((b.lat * Math.PI) / 180) *
+          Math.sin(dLng / 2) ** 2;
+        return 2 * r * Math.asin(Math.sqrt(s1 + s2));
+      };
+      const parkingMapText = (p) =>
+        `${parkingName(p)} ${parkingAddress(p)} ${parkingCity(p)} Kosovo`;
+      const mapsSearchUrl = (p) => {
+        const coords = parkingCoords(p);
+        if (coords)
+          return `https://www.google.com/maps/search/?api=1&query=${coords.lat},${coords.lng}`;
+        return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(parkingMapText(p))}`;
+      };
+      const mapsDirectionsUrl = (p) => {
+        const coords = parkingCoords(p);
+        const destination = coords
+          ? `${coords.lat},${coords.lng}`
+          : parkingMapText(p);
+        if (!userCoords) return mapsSearchUrl(p);
+        return `https://www.google.com/maps/dir/?api=1&origin=${userCoords.lat},${userCoords.lng}&destination=${encodeURIComponent(destination)}&travelmode=driving`;
+      };
+      const googleStreetViewUrl = (p) => {
+        const coords = parkingCoords(p);
+        if (!coords) return mapsSearchUrl(p);
+        return `https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${coords.lat},${coords.lng}&heading=0&pitch=0&fov=90`;
+      };
+      const appleMapsUrl = (p) => {
+        const coords = parkingCoords(p);
+        const destination = coords
+          ? `${coords.lat},${coords.lng}`
+          : parkingMapText(p);
+        if (userCoords)
+          return `https://maps.apple.com/?saddr=${userCoords.lat},${userCoords.lng}&daddr=${encodeURIComponent(destination)}&dirflg=d`;
+        if (coords)
+          return `https://maps.apple.com/?ll=${coords.lat},${coords.lng}&q=${encodeURIComponent(parkingName(p))}`;
+        return `https://maps.apple.com/?q=${encodeURIComponent(destination)}`;
+      };
+      async function loadParkings() {
+        parkingStatus.textContent = "Duke ngarkuar parkingjet...";
+        const [parkings, owners] = await Promise.all([
+          sb.from("parko_parkings").select("*").eq("status", "approved"),
+          sb.from("parko_owner_requests").select("*").eq("status", "approved"),
+        ]);
+        let rows = [
+          ...(parkings.data || []),
+          ...(owners.data || []).map((x) => ({
+            ...x,
+            name: x.parking_name,
+            address: x.address || x.city,
+            source: "owner",
+          })),
+        ];
+        const seen = new Set();
+        rows = rows.filter((p) => {
+          const key = norm(
+            `${parkingName(p)}|${parkingCity(p)}|${parkingAddress(p)}`,
+          );
+          if (seen.has(key)) return false;
+          seen.add(key);
+          return true;
+        });
+        if (city.value)
+          rows = rows.filter((p) => norm(parkingCity(p)) === norm(city.value));
+        if (feature.value)
+          rows = rows.filter((p) =>
+            parkingFeatures(p).some((x) => norm(x) === norm(feature.value)),
+          );
+        const q = norm(query.value);
+        if (q)
+          rows = rows.filter((p) =>
+            [
+              parkingName(p),
+              parkingCity(p),
+              parkingAddress(p),
+              parkingFeatures(p).join(" "),
+            ]
+              .map(norm)
+              .some((x) => x.includes(q)),
+          );
+        if (userCoords)
+          rows = rows
+            .map((p) => {
+              const coords = parkingCoords(p);
+              return {
+                ...p,
+                _distanceKm: coords ? distanceKm(userCoords, coords) : null,
+              };
+            })
+            .sort(
+              (a, b) =>
+                (a._distanceKm ?? Number.POSITIVE_INFINITY) -
+                (b._distanceKm ?? Number.POSITIVE_INFINITY),
+            );
+        const hasFilters = q || city.value || feature.value;
+        parkingStatus.textContent = rows.length
+          ? `${rows.length} parkingje të aprovuara${q ? " për kërkimin tënd" : ""}.${userCoords ? " Distanca tregohet në km nga lokacioni yt." : ""}`
+          : hasFilters
+            ? "Nuk ka parkingje të aprovuara për këtë filtër."
+            : "Nuk ka ende parkingje të aprovuara në databazë.";
+        cards.innerHTML = rows
+          .map((p) => {
+            const name = parkingName(p);
+            const cityName = parkingCity(p);
+            const distance =
+              p._distanceKm != null
+                ? `<span class='badge good'>${p._distanceKm.toFixed(1)} km larg</span>`
+                : userCoords
+                  ? `<span class='badge'>Rruga në Maps</span>`
+                  : "";
+            const googleHref = userCoords
+              ? mapsDirectionsUrl(p)
+              : mapsSearchUrl(p);
+            const streetViewButton = parkingCoords(p)
+              ? `<a class='btn' target='_blank' rel='noopener' href='${googleStreetViewUrl(p)}'>View Street</a>`
+              : "";
+            const appleHref = appleMapsUrl(p);
+            const price =
+              p.hourly_price != null
+                ? "€" + Number(p.hourly_price).toFixed(2) + "/h"
+                : "Çmimi në vend";
+            return `<article class='card'><div class='visual'><span class='badge good'>${p.source === "owner" ? "Owner approved" : "Partner listing"}</span></div><h3>${esc(name)}</h3><div class='muted'>${esc(parkingAddress(p) || cityName)}</div><div class='badges'>${distance}${parkingFeatures(
+              p,
+            )
+              .map((x) => `<span class='badge'>${esc(x)}</span>`)
+              .join(
+                "",
+              )}</div><div class='row' style='justify-content:space-between'><div class='price'>${price}</div><div class='row'><button class='btn primary' onclick='book(${JSON.stringify(name)},${Number(p.hourly_price ?? 1.5)})'>Rezervo</button><button class='btn' onclick='favorite(${JSON.stringify(name)},${JSON.stringify(cityName)})'>♡</button>${streetViewButton}<a class='btn' target='_blank' rel='noopener' href='${googleHref}'>Google Maps</a><a class='btn' target='_blank' rel='noopener' href='${appleHref}'>Apple Maps</a></div></div></article>`;
+          })
+          .join("");
+        cards.querySelectorAll(".visual").forEach((visual, index) => {
+          const parking = rows[index];
+          const photo = parkingPhoto(parking);
+          const customPhoto = Boolean(
+            parking.image_url ||
+              parking.imageUrl ||
+              parking.photo_url ||
+              parking.photoUrl,
+          );
+          const label = customPhoto
+            ? "Foto e parkingut"
+            : `Pamje e zonës · ${parkingCity(parking) || "Kosovë"}`;
+          visual.classList.add("photo");
+          visual.title = "Hap burimin e fotos";
+          visual.innerHTML = `<img loading="lazy" src="${esc(photo.url)}" alt="${esc(label + " - " + parkingName(parking))}" onerror="this.closest('.visual').classList.add('photo-failed')"><span class="badge good parking-photo-badge">${esc(label)}</span><span class="photo-credit">${esc(photo.credit)}</span>`;
+          visual.addEventListener("click", () => window.open(photo.source, "_blank"));
+        });
+      }
+      function searchMap() {
+        loadParkings();
+      }
+      function nearMe() {
+        if (!navigator.geolocation) {
+          note("Ky browser nuk e mbështet lokacionin live.");
+          return;
+        }
+        note("Po kërkohet leja për lokacion...");
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            userCoords = {
+              lat: pos.coords.latitude,
+              lng: pos.coords.longitude,
+            };
+            note(
+              "U gjet lokacioni. Po shfaqen parkingjet afër teje me distancë në km.",
+            );
+            loadParkings();
+          },
+          () => note("Leja për lokacion u refuzua ose nuk u gjet."),
+          { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 },
+        );
+      }
+      function requireUser() {
+        if (!user || isGuestUser()) {
+          openAuth("login");
+          if (isGuestUser()) note("Kyçu me llogari për të rezervuar.");
+          note("Kyçu për të vazhduar");
+          return false;
+        }
+        return true;
+      }
+      function book(name, p) {
+        if (!requireUser()) return;
+        rParking.value = name;
+        activePrice = p ?? 1.5;
+        rDate.min = new Date().toISOString().slice(0, 10);
+        rDate.value = rDate.min;
+        rTime.value = "12:00";
+        reserveModal.classList.add("on");
+        rMsg.textContent = "";
+      }
+      async function saveBooking() {
+        if (!requireUser()) return;
+        if (!rDate.value || !rTime.value || !rPlate.value.trim()) {
+          rMsg.textContent = "Plotëso datën, orën dhe targën.";
+          return;
+        }
+        let discount = 0,
+          code = rPromo.value.trim().toUpperCase();
+        if (code) {
+          const { data } = await sb
+            .from("parko_promocodes")
+            .select("discount_percent")
+            .eq("code", code)
+            .maybeSingle();
+          discount = data?.discount_percent || 0;
+        }
+        const total = Number(rDur.value) * activePrice * (1 - discount / 100);
+        const { data, error } = await sb
+          .from("parko_reservations")
+          .insert({
+            user_id: user.id,
+            parking_name: rParking.value,
+            city: city.value,
+            reservation_date: rDate.value,
+            start_time: rTime.value,
+            duration_hours: Number(rDur.value),
+            plate: rPlate.value.trim(),
+            total_price: total,
+            promo_code: code || null,
+          })
+          .select()
+          .single();
+        rMsg.textContent = error
+          ? error.message
+          : "Rezervimi u krijua. ID: " + data.id.slice(0, 8).toUpperCase();
+        if (!error) {
+          note("QR Pass u krijua");
+          loadPrivate();
+        }
+      }
+      async function favorite(name, c) {
+        if (!requireUser()) return;
+        const { error } = await sb
+          .from("parko_favorites")
+          .upsert(
+            { user_id: user.id, parking_name: name, city: c },
+            { onConflict: "user_id,parking_name,city" },
+          );
+        note(error ? error.message : "U ruajt te favorites");
+        loadPrivate();
+      }
+      async function addVehicle() {
+        if (!requireUser()) return;
+        if (!carName.value.trim() || !carPlate.value.trim()) return;
+        const { error } = await sb.from("parko_vehicles").insert({
+          user_id: user.id,
+          name: carName.value.trim(),
+          plate: carPlate.value.trim(),
+        });
+        note(error ? error.message : "Automjeti u shtua");
+        if (!error) {
+          carName.value = "";
+          carPlate.value = "";
+          loadPrivate();
+        }
+      }
+      const cleanPhone = (phone) => String(phone || "").replace(/[^\d+]/g, "");
+      async function saveWhatsAppPhone() {
+        if (!requireUser()) return;
+        const phone = cleanPhone(waPhone.value);
+        if (!phone || phone.length < 8) {
+          waMsg.textContent = "Shkruaj numrin WhatsApp me prefiks shteti.";
+          return;
+        }
+        const { error } = await sb
+          .from("parko_profiles")
+          .update({ phone })
+          .eq("id", user.id);
+        waMsg.textContent = error
+          ? error.message
+          : "Numri WhatsApp u ruajt për kodet e rezervimit.";
+        if (!error) {
+          profile = { ...(profile || {}), phone };
+          note("Numri WhatsApp u ruajt.");
+        }
+      }
+      async function sendCodeWhatsApp(reservationId) {
+        if (!requireUser()) return;
+        const phone = cleanPhone(waPhone.value || profile?.phone);
+        if (!phone || phone.length < 8) {
+          waMsg.textContent = "Vendos numrin WhatsApp para dërgimit.";
+          return;
+        }
+        waMsg.textContent = "Po përgatitet dërgimi në WhatsApp...";
+        const {
+          data: { session },
+        } = await sb.auth.getSession();
+        const response = await fetch("/api/whatsapp-code", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${session?.access_token || ""}`,
+          },
+          body: JSON.stringify({ to: phone, reservationId }),
+        });
+        const result = await response.json().catch(() => ({}));
+        if (response.ok && result.ok) {
+          waMsg.textContent = "Kodi u dërgua në WhatsApp.";
+          note("Kodi u dërgua në WhatsApp.");
+          return;
+        }
+        const booking = result.booking || {};
+        const text = encodeURIComponent(
+          `Parko Kosova - kodi i rezervimit: ${booking.code || "QR"} | ${booking.parking || ""} | ${booking.date || ""}`,
+        );
+        waMsg.textContent =
+          result.message ||
+          "WhatsApp API ende nuk është lidhur. Po hapet WhatsApp manual.";
+        window.open(
+          `https://wa.me/38972627662?text=${text}`,
+          "_blank",
+          "noopener",
+        );
+      }
+      async function addReview() {
+        if (!requireUser()) return;
+        if (!revParking.value.trim() || !revText.value.trim()) return;
+        const { error } = await sb.from("parko_reviews").insert({
+          user_id: user.id,
+          parking_name: revParking.value.trim(),
+          city: revCity.value.trim() || city.value,
+          rating: Number(revStars.value),
+          body: revText.value.trim(),
+        });
+        note(error ? error.message : "Review u publikua");
+        if (!error) {
+          revText.value = "";
+          loadReviews();
+          loadPrivate();
+        }
+      }
+      async function submitOwner() {
+        if (!requireUser()) return;
+        const features = ownFeatures.value
+          .split(",")
+          .map((x) => x.trim())
+          .filter(Boolean);
+        const { error } = await sb.from("parko_owner_requests").insert({
+          user_id: user.id,
+          parking_name: ownName.value.trim(),
+          city: ownCity.value.trim(),
+          hourly_price: Number(ownPrice.value || 0),
+          capacity: Number(ownCap.value || 0),
+          features,
+        });
+        note(error ? error.message : "Kërkesa u dërgua");
+        loadPrivate();
+      }
+      async function loadReviews() {
+        const { data } = await sb
+          .from("parko_reviews")
+          .select("*")
+          .order("created_at", { ascending: false })
+          .limit(30);
+        reviewList.innerHTML =
+          (data || [])
+            .map(
+              (r) =>
+                `<div class='review'><b>${esc(r.parking_name)}</b> <span class='stars'>${"★".repeat(r.rating)}</span><br>${esc(r.body)}</div>`,
+            )
+            .join("") || "<span class=muted>Nuk ka reviews.</span>";
+      }
+      function toggleSupportPopover() {
+        supportPopover.classList.toggle("hidden");
+        if (!supportPopover.classList.contains("hidden")) {
+          supportQuickAuth.textContent = user && !isGuestUser()
+            ? "Je i kyçur. Kërkesa do të hapet direkt në inbox-in e ekipit."
+            : "Mund të kërkosh ndihmë edhe si mysafir; na lër një kontakt për përgjigje.";
+          if (user && !isGuestUser()) {
+            quickSupportName.value = profile?.full_name || user.user_metadata?.full_name || "";
+            quickSupportContact.value = user.email || user.phone || "";
+          }
+        }
+      }
+      async function sendQuickSupport() {
+        const name = quickSupportName.value.trim();
+        const contact = quickSupportContact.value.trim();
+        const body = quickSupportMessage.value.trim();
+        const priority = quickSupportPriority.value;
+        if (name.length < 2 || contact.length < 5 || body.length < 2) {
+          quickSupportMsg.textContent = "Plotëso emrin, kontaktin dhe mesazhin.";
+          return;
+        }
+        quickSupportMsg.textContent = "Po dërgohet kërkesa...";
+        if (user && !isGuestUser()) {
+          const { data: thread, error } = await sb
+            .from("parko_support_threads")
+            .insert({
+              user_id: user.id,
+              subject: "Kërkesë nga Live Support",
+              priority,
+              customer_name: name,
+              customer_email: user.email || contact,
+            })
+            .select()
+            .single();
+          if (error) {
+            quickSupportMsg.textContent = error.message;
+            return;
+          }
+          const { error: messageError } = await sb.from("parko_support_messages").insert({
+            thread_id: thread.id,
+            sender_id: user.id,
+            sender_role: "customer",
+            body,
+          });
+          if (messageError) {
+            quickSupportMsg.textContent = messageError.message;
+            return;
+          }
+          activeSupportThread = thread.id;
+          quickSupportChatBtn.classList.remove("hidden");
+        } else {
+          const { error } = await sb.from("parko_support_leads").insert({
+            full_name: name,
+            contact,
+            message: body,
+            priority,
+          });
+          if (error) {
+            quickSupportMsg.textContent = error.message;
+            return;
+          }
+        }
+        quickSupportMsg.textContent = "Kërkesa u dërgua. Ekipi do të të kontaktojë sa më shpejt.";
+        quickSupportMessage.value = "";
+        supportCount.classList.add("hidden");
+        note("Kërkesa e supportit u dërgua.");
+        if (isAdmin()) loadAdmin();
+      }
+      function setupSupportRealtime() {
+        if (!user || supportChannel) return;
+        supportChannel = sb
+          .channel("parko-support-" + user.id)
+          .on(
+            "postgres_changes",
+            { event: "*", schema: "public", table: "parko_support_threads" },
+            () => {
+              if (!support.classList.contains("hidden")) loadSupport();
+            },
+          )
+          .on(
+            "postgres_changes",
+            { event: "*", schema: "public", table: "parko_support_messages" },
+            () => {
+              if (!support.classList.contains("hidden")) loadSupport();
+            },
+          )
+          .on(
+            "postgres_changes",
+            { event: "*", schema: "public", table: "parko_support_leads" },
+            () => {
+              if (isSupportStaff() && !admin.classList.contains("hidden")) loadAdmin();
+            },
+          )
+          .subscribe();
+      }
+      async function loadSupport() {
+        if (!user) return;
+        supportBadge.textContent = isSupportStaff()
+          ? currentRole === "admin"
+            ? "Admin support"
+            : "Moderator support"
+          : "Klient";
+        supportRoleHint.textContent = isSupportStaff()
+          ? "Inbox i Live Support: përgjigju klientëve pa qasje te paneli i plotë admin."
+          : "Pyet moderatoren për rezervime, parkingje ose probleme në faqe.";
+        supportNewBox.classList.toggle("hidden", isSupportStaff());
+        supportLeadBox.classList.toggle("hidden", !isSupportStaff());
+        if (isSupportStaff()) {
+          const { data: leads } = await sb.from("parko_support_leads").select("*").order("created_at", { ascending: false }).limit(100);
+          supportLeadList.innerHTML = (leads || []).map((x) =>
+            `<div class='item'><b>${esc(x.full_name)}</b> <span class='status'>${esc(x.status)}</span><br><span class='muted'>${esc(x.contact)} · ${new Date(x.created_at).toLocaleString()}</span><p style='margin:8px 0'>${esc(x.message)}</p><div class='row'><button class='btn primary' onclick="updateSupportLead('${x.id}','in_progress')">Merr përsipër</button><button class='btn' onclick="updateSupportLead('${x.id}','resolved')">Mbyll</button></div></div>`
+          ).join("") || "<span class=muted>Nuk ka kërkesa nga widget-i.</span>";
+        }
+        supportInboxTitle.textContent = isSupportStaff()
+          ? "Inbox i klientëve"
+          : "Bisedat e mia";
+        let threadQuery = sb
+          .from("parko_support_threads")
+          .select("*")
+          .order("last_message_at", { ascending: false });
+        if (!isSupportStaff()) threadQuery = threadQuery.eq("user_id", user.id);
+        const { data: threads, error } = await threadQuery;
+        if (error) {
+          supportThreads.innerHTML = `<span class='muted'>${esc(error.message)}</span>`;
+          return;
+        }
+        const list = threads || [];
+        if (!activeSupportThread && list[0]) activeSupportThread = list[0].id;
+        if (
+          activeSupportThread &&
+          !list.some((x) => x.id === activeSupportThread)
+        ) {
+          activeSupportThread = list[0]?.id || null;
+        }
+        supportThreads.innerHTML =
+          list
+            .map(
+              (t) =>
+                `<button class='btn ${t.id === activeSupportThread ? "primary" : ""}' style='width:100%;justify-content:flex-start;margin-bottom:8px;text-align:left' onclick="selectSupportThread('${t.id}')"><b>${esc(t.subject)}</b><br><span class='muted'>${esc(t.customer_email || "")} · ${esc(t.status)} · ${new Date(t.last_message_at).toLocaleString()}</span></button>`,
+            )
+            .join("") || "<span class=muted>Nuk ka biseda support.</span>";
+        await loadSupportMessages();
+      }
+      async function selectSupportThread(id) {
+        activeSupportThread = id;
+        await loadSupport();
+      }
+      async function loadSupportMessages() {
+        if (!activeSupportThread) {
+          supportConversationTitle.textContent = "Biseda";
+          supportMessages.innerHTML = "Zgjidh ose hap një bisedë.";
+          return;
+        }
+        const [{ data: thread }, { data: messages, error }] = await Promise.all(
+          [
+            sb
+              .from("parko_support_threads")
+              .select("*")
+              .eq("id", activeSupportThread)
+              .maybeSingle(),
+            sb
+              .from("parko_support_messages")
+              .select("*")
+              .eq("thread_id", activeSupportThread)
+              .order("created_at", { ascending: true }),
+          ],
+        );
+        supportConversationTitle.textContent = thread
+          ? `${thread.subject} · ${thread.status}`
+          : "Biseda";
+        if (error) {
+          supportMessages.innerHTML = esc(error.message);
+          return;
+        }
+        supportMessages.classList.remove("muted");
+        supportMessages.innerHTML =
+          (messages || [])
+            .map((m) => {
+              const mine = m.sender_id === user.id;
+              return `<div class='msg ${mine ? "mine" : ""}'><b>${esc(m.sender_role)}</b><br>${esc(m.body)}<small>${new Date(m.created_at).toLocaleString()}</small></div>`;
+            })
+            .join("") || "<span class=muted>Nuk ka mesazhe ende.</span>";
+        supportMessages.scrollTop = supportMessages.scrollHeight;
       }
       async function createSupportThread() {
         if (!requireUser()) return;
@@ -818,7 +2346,7 @@
             stRev.textContent =
               0;
           bookingList.innerHTML =
-            "<span class=muted>KyÃ§u pÃ«r tÃ« parÃ« rezervimet.</span>";
+            "<span class=muted>Kyçu për të parë rezervimet.</span>";
           vehicleList.innerHTML =
             favoriteList.innerHTML =
             passList.innerHTML =
@@ -858,7 +2386,7 @@
           (b.data || [])
             .map(
               (x) =>
-                `<div class='item'><b>${esc(x.parking_name)}</b> Â· ${esc(x.city)} <span class='status'>${esc(x.status)}</span><br><span class='muted'>${x.reservation_date} ${x.start_time?.slice(0, 5)} Â· ${x.duration_hours}h Â· ${esc(x.plate)} Â· â‚¬${Number(x.total_price).toFixed(2)}</span><div class='row' style='margin-top:8px'><a class='btn' target='_blank' href='https://wa.me/38972627662?text=${encodeURIComponent("Parko Kosova rezervim " + x.id + " | " + x.parking_name + " | " + x.reservation_date + " " + x.start_time + " | " + x.plate)}'>WhatsApp</a></div></div>`,
+                `<div class='item'><b>${esc(x.parking_name)}</b> · ${esc(x.city)} <span class='status'>${esc(x.status)}</span><br><span class='muted'>${x.reservation_date} ${x.start_time?.slice(0, 5)} · ${x.duration_hours}h · ${esc(x.plate)} · €${Number(x.total_price).toFixed(2)}</span><div class='row' style='margin-top:8px'><a class='btn' target='_blank' href='https://wa.me/38972627662?text=${encodeURIComponent("Parko Kosova rezervim " + x.id + " | " + x.parking_name + " | " + x.reservation_date + " " + x.start_time + " | " + x.plate)}'>WhatsApp</a></div></div>`,
             )
             .join("") || "<span class=muted>Nuk ka rezervime.</span>";
         vehicleList.innerHTML = (v.data || [])
@@ -871,23 +2399,23 @@
           (f.data || [])
             .map(
               (x) =>
-                `<div class='item'>${esc(x.parking_name)} Â· ${esc(x.city)}</div>`,
+                `<div class='item'>${esc(x.parking_name)} · ${esc(x.city)}</div>`,
             )
             .join("") || "<span class=muted>Nuk ka favorites.</span>";
         passList.innerHTML =
           (b.data || [])
             .map(
               (x) =>
-                `<div class='item'><b>${esc(x.parking_name)}</b><br><img alt='QR pass' style='width:180px;height:180px;background:white;padding:8px;border-radius:14px;margin:10px 0' src='https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(x.qr_token)}'><br><span class='muted'>${esc(x.qr_token)}</span><div class='row' style='margin-top:10px'><button class='btn primary' onclick="sendCodeWhatsApp('${x.id}')">DÃ«rgo kodin nÃ« WhatsApp</button><a class='btn' target='_blank' href='https://wa.me/38972627662?text=${encodeURIComponent("Parko Kosova kodi " + x.qr_token + " | " + x.parking_name)}'>WhatsApp manual</a></div></div>`,
+                `<div class='item'><b>${esc(x.parking_name)}</b><br><img alt='QR pass' style='width:180px;height:180px;background:white;padding:8px;border-radius:14px;margin:10px 0' src='https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(x.qr_token)}'><br><span class='muted'>${esc(x.qr_token)}</span><div class='row' style='margin-top:10px'><button class='btn primary' onclick="sendCodeWhatsApp('${x.id}')">Dërgo kodin në WhatsApp</button><a class='btn' target='_blank' href='https://wa.me/38972627662?text=${encodeURIComponent("Parko Kosova kodi " + x.qr_token + " | " + x.parking_name)}'>WhatsApp manual</a></div></div>`,
             )
             .join("") || "<span class=muted>Nuk ka QR pass.</span>";
         ownerList.innerHTML =
           (o.data || [])
             .map(
               (x) =>
-                `<div class='item'><b>${esc(x.parking_name)}</b> Â· ${esc(x.city)} <span class='status'>${esc(x.status)}</span></div>`,
+                `<div class='item'><b>${esc(x.parking_name)}</b> · ${esc(x.city)} <span class='status'>${esc(x.status)}</span></div>`,
             )
-            .join("") || "<span class=muted>Nuk ka kÃ«rkesa.</span>";
+            .join("") || "<span class=muted>Nuk ka kërkesa.</span>";
         loadReviews();
         if (isAdmin()) loadAdmin();
       }
@@ -931,7 +2459,7 @@
           (x) => x.status === "pending",
         ).length;
         aRevenue.textContent =
-          "â‚¬" +
+          "€" +
           (b.data || [])
             .filter((x) => ["confirmed", "completed"].includes(x.status))
             .reduce((s, x) => s + Number(x.total_price || 0), 0)
@@ -954,7 +2482,7 @@
           })),
           ...(leads.data || []).slice(0, 20).map((x) => ({
             at: x.created_at,
-            summary: `KÃ«rkesÃ« supporti nga ${x.full_name}`,
+            summary: `Kërkesë supporti nga ${x.full_name}`,
             role: "customer",
             actor: x.contact,
           })),
@@ -966,22 +2494,22 @@
           })),
         ].sort((a, z) => new Date(z.at) - new Date(a.at)).slice(0, 40);
         adminActivity.innerHTML = allLogs.map((x) =>
-          `<div class='log-item'><span class='log-dot'></span><div><b>${esc(x.summary)}</b><br><span class='muted'>${esc(x.actor)} Â· ${esc(x.role)}</span></div><time>${new Date(x.at).toLocaleString()}</time></div>`
+          `<div class='log-item'><span class='log-dot'></span><div><b>${esc(x.summary)}</b><br><span class='muted'>${esc(x.actor)} · ${esc(x.role)}</span></div><time>${new Date(x.at).toLocaleString()}</time></div>`
         ).join("") || "<span class=muted>Nuk ka aktivitete ende.</span>";
         adminSupportLeads.innerHTML = (leads.data || []).map((x) =>
-          `<div class='item'><b>${esc(x.full_name)}</b> <span class='status'>${esc(x.status)}</span><br><span class='muted'>${esc(x.contact)} Â· ${new Date(x.created_at).toLocaleString()}</span><p style='margin:8px 0'>${esc(x.message)}</p><div class='row'><button class='btn primary' onclick="updateSupportLead('${x.id}','in_progress')">Merr pÃ«rsipÃ«r</button><button class='btn' onclick="updateSupportLead('${x.id}','resolved')">Mbyll</button></div></div>`
-        ).join("") || "<span class=muted>Nuk ka kÃ«rkesa tÃ« reja nga widget-i.</span>";
-        adminSupportStatus.textContent = `${(leads.data || []).filter((x) => x.status !== "resolved").length} kÃ«rkesa`;
+          `<div class='item'><b>${esc(x.full_name)}</b> <span class='status'>${esc(x.status)}</span><br><span class='muted'>${esc(x.contact)} · ${new Date(x.created_at).toLocaleString()}</span><p style='margin:8px 0'>${esc(x.message)}</p><div class='row'><button class='btn primary' onclick="updateSupportLead('${x.id}','in_progress')">Merr përsipër</button><button class='btn' onclick="updateSupportLead('${x.id}','resolved')">Mbyll</button></div></div>`
+        ).join("") || "<span class=muted>Nuk ka kërkesa të reja nga widget-i.</span>";
+        adminSupportStatus.textContent = `${(leads.data || []).filter((x) => x.status !== "resolved").length} kërkesa`;
         adminBookings.innerHTML = (b.data || [])
           .map(
             (x) =>
-              `<div class='item'><b>${esc(x.parking_name)}</b> Â· ${esc(x.city)} <span class='status'>${esc(x.status)}</span><div class='row' style='margin-top:8px'><button class='btn primary' onclick="adminStatus('${x.id}','confirmed')">Accept</button><button class='btn danger' onclick="adminStatus('${x.id}','rejected')">Reject</button><button class='btn' onclick="adminStatus('${x.id}','completed')">Complete</button></div></div>`,
+              `<div class='item'><b>${esc(x.parking_name)}</b> · ${esc(x.city)} <span class='status'>${esc(x.status)}</span><div class='row' style='margin-top:8px'><button class='btn primary' onclick="adminStatus('${x.id}','confirmed')">Accept</button><button class='btn danger' onclick="adminStatus('${x.id}','rejected')">Reject</button><button class='btn' onclick="adminStatus('${x.id}','completed')">Complete</button></div></div>`,
           )
           .join("");
         adminOwners.innerHTML = (o.data || [])
           .map(
             (x) =>
-              `<div class='item'><b>${esc(x.parking_name)}</b> Â· ${esc(x.city)} <span class='status'>${esc(x.status)}</span><div class='row'><button class='btn primary' onclick="ownerStatus('${x.id}','approved')">Approve</button><button class='btn danger' onclick="ownerStatus('${x.id}','rejected')">Reject</button></div></div>`,
+              `<div class='item'><b>${esc(x.parking_name)}</b> · ${esc(x.city)} <span class='status'>${esc(x.status)}</span><div class='row'><button class='btn primary' onclick="ownerStatus('${x.id}','approved')">Approve</button><button class='btn danger' onclick="ownerStatus('${x.id}','rejected')">Reject</button></div></div>`,
           )
           .join("");
         adminReports.innerHTML =
@@ -997,9 +2525,9 @@
           (g.data || [])
             .map(
               (x) =>
-                `<div class='item'><b>${esc(x.full_name)}</b><br><span class='muted'>${esc(x.phone)} Â· ${new Date(x.created_at).toLocaleString()}</span></div>`,
+                `<div class='item'><b>${esc(x.full_name)}</b><br><span class='muted'>${esc(x.phone)} · ${new Date(x.created_at).toLocaleString()}</span></div>`,
             )
-            .join("") || "<span class=muted>Nuk ka hyrje mysafirÃ«sh.</span>";
+            .join("") || "<span class=muted>Nuk ka hyrje mysafirësh.</span>";
         adminUsers.innerHTML =
           (u.data || [])
             .map((x) => {
@@ -1015,13 +2543,13 @@
                   : !email
                     ? "<span class='badge'>Login me telefon</span>"
                     : `<button class='btn primary' onclick="setUserRole('${x.id}',${JSON.stringify(email)},'moderator')">Moderator</button><button class='btn' onclick="setUserRole('${x.id}',${JSON.stringify(email)},'customer')">Customer</button>${ownerButton}`;
-              return `<div class='item'><b>${esc(x.full_name || "PÃ«rdorues")}</b> <span class='status'>${esc(role)}</span><br><span class='muted'>${esc(contact)} Â· ${new Date(x.created_at).toLocaleString()}</span><div class='row' style='margin-top:8px'>${actions}</div></div>`;
+              return `<div class='item'><b>${esc(x.full_name || "Përdorues")}</b> <span class='status'>${esc(role)}</span><br><span class='muted'>${esc(contact)} · ${new Date(x.created_at).toLocaleString()}</span><div class='row' style='margin-top:8px'>${actions}</div></div>`;
             })
             .join("") ||
-          "<span class=muted>Nuk ka pÃ«rdorues tÃ« regjistruar.</span>";
+          "<span class=muted>Nuk ka përdorues të regjistruar.</span>";
         if (staffRows.length) {
           adminUsers.innerHTML +=
-            "<div class='item'><b>ModeratorÃ« tÃ« ftuar</b>" +
+            "<div class='item'><b>Moderatorë të ftuar</b>" +
             staffRows
               .map(
                 (x) =>
@@ -1047,15 +2575,15 @@
       async function updateSupportLead(id, status) {
         if (!isSupportStaff()) return;
         const { error } = await sb.from("parko_support_leads").update({ status, assigned_to: user.id, updated_at: new Date().toISOString() }).eq("id", id);
-        if (!error) await logActivity("update", "support_lead", id, `Support lead u shÃ«nua si ${status}`);
-        note(error ? error.message : "KÃ«rkesa u pÃ«rditÃ«sua.");
+        if (!error) await logActivity("update", "support_lead", id, `Support lead u shënua si ${status}`);
+        note(error ? error.message : "Kërkesa u përditësua.");
         await loadAdmin();
       }
       async function grantOwnerAccess(email) {
         if (!isAdmin()) return;
         const normalized = String(email || "").trim().toLowerCase();
         if (!normalized || !normalized.includes("@")) {
-          note("Shkruaj email valid pÃ«r Owner Portal.");
+          note("Shkruaj email valid për Owner Portal.");
           return;
         }
         const { error } = await sb.from("parko_owner_access").upsert({ email: normalized, granted_by: user.id }, { onConflict: "email" });
@@ -1074,12 +2602,12 @@
       }
       async function adminStatus(id, status) {
         await sb.from("parko_reservations").update({ status }).eq("id", id);
-        await logActivity("update", "reservation", id, `Rezervimi u shÃ«nua si ${status}`);
+        await logActivity("update", "reservation", id, `Rezervimi u shënua si ${status}`);
         loadPrivate();
       }
       async function ownerStatus(id, status) {
         await sb.from("parko_owner_requests").update({ status }).eq("id", id);
-        await logActivity("update", "owner_request", id, `KÃ«rkesa owner u shÃ«nua si ${status}`);
+        await logActivity("update", "owner_request", id, `Kërkesa owner u shënua si ${status}`);
         loadPrivate();
       }
       async function setUserRole(id, email, role) {
@@ -1097,15 +2625,15 @@
           .from("parko_profiles")
           .update({ role })
           .eq("id", id);
-        if (!error) await logActivity("role_change", "profile", id, `Roli i ${normalized} u bÃ« ${role}`);
-        note(error ? error.message : "Roli u pÃ«rditÃ«sua.");
+        if (!error) await logActivity("role_change", "profile", id, `Roli i ${normalized} u bë ${role}`);
+        note(error ? error.message : "Roli u përditësua.");
         await loadAdmin();
       }
       async function addModeratorInvite() {
         if (!isAdmin()) return;
         const email = moderatorEmail.value.trim().toLowerCase();
         if (!email || !email.includes("@")) {
-          note("Shkruaj email valid pÃ«r moderatorin.");
+          note("Shkruaj email valid për moderatorin.");
           return;
         }
         const { error } = await sb
@@ -1123,9 +2651,9 @@
               .update({ role: "moderator" })
               .eq("id", prof.id);
           moderatorEmail.value = "";
-          await logActivity("grant", "staff_role", email, `Moderatori ${email} u shtua pÃ«r support`);
+          await logActivity("grant", "staff_role", email, `Moderatori ${email} u shtua për support`);
         }
-        note(error ? error.message : "Moderatori u shtua pÃ«r Live Support.");
+        note(error ? error.message : "Moderatori u shtua për Live Support.");
         await loadAdmin();
       }
       async function removeModeratorInvite(email) {
@@ -1160,4 +2688,3 @@
     </script>
   </body>
 </html>
-

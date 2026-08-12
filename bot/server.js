@@ -2,6 +2,7 @@ require("dotenv").config();
 
 const express = require("express");
 const QRCode = require("qrcode");
+const { createClient } = require("@supabase/supabase-js");
 const { Client, LocalAuth } = require("whatsapp-web.js");
 
 const app = express();
@@ -20,6 +21,19 @@ const autoReplyCooldownMs = Math.max(
 );
 const sendHistory = new Map();
 const autoReplyHistory = new Map();
+const outboxEnabled =
+  String(process.env.WHATSAPP_OUTBOX_ENABLED || "false").toLowerCase() ===
+  "true";
+const outboxPollMs = Math.max(1000, Number(process.env.OUTBOX_POLL_MS || 3000));
+const supabase =
+  process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY
+    ? createClient(
+        process.env.SUPABASE_URL,
+        process.env.SUPABASE_SERVICE_ROLE_KEY,
+        { auth: { autoRefreshToken: false, persistSession: false } },
+      )
+    : null;
+let outboxBusy = false;
 
 let state = "starting";
 let qrDataUrl = null;
@@ -205,6 +219,63 @@ client.on("message", async (message) => {
   }
 });
 
+async function processOutbox() {
+  if (!outboxEnabled || !supabase || state !== "ready" || outboxBusy) return;
+  outboxBusy = true;
+  try {
+    const { data: jobs, error } = await supabase
+      .from("parko_whatsapp_outbox")
+      .select("id,phone,message,attempts")
+      .eq("status", "pending")
+      .lte("available_at", new Date().toISOString())
+      .order("created_at", { ascending: true })
+      .limit(5);
+    if (error) throw error;
+
+    for (const job of jobs || []) {
+      const { data: claimed } = await supabase
+        .from("parko_whatsapp_outbox")
+        .update({
+          status: "processing",
+          attempts: Number(job.attempts || 0) + 1,
+          processing_started_at: new Date().toISOString(),
+        })
+        .eq("id", job.id)
+        .eq("status", "pending")
+        .select("id")
+        .maybeSingle();
+      if (!claimed) continue;
+
+      try {
+        const recipient = normaliseNumber(job.phone);
+        if (!recipient) throw new Error("Invalid recipient phone");
+        await client.sendMessage(recipient, job.message);
+        await supabase
+          .from("parko_whatsapp_outbox")
+          .update({
+            status: "sent",
+            sent_at: new Date().toISOString(),
+            last_error: null,
+          })
+          .eq("id", job.id);
+      } catch (sendError) {
+        await supabase
+          .from("parko_whatsapp_outbox")
+          .update({
+            status: Number(job.attempts || 0) + 1 >= 3 ? "failed" : "pending",
+            available_at: new Date(Date.now() + 15000).toISOString(),
+            last_error: String(sendError.message || sendError),
+          })
+          .eq("id", job.id);
+      }
+    }
+  } catch (error) {
+    lastError = error.message;
+  } finally {
+    outboxBusy = false;
+  }
+}
+
 client.on("auth_failure", (message) => {
   state = "auth_failure";
   lastError = String(message);
@@ -232,4 +303,5 @@ app.listen(port, () => {
     lastError = error.message;
     console.error(error);
   });
+  setInterval(processOutbox, outboxPollMs);
 });
